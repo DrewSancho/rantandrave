@@ -1,7 +1,7 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
 
-var AppView = require('./components/Views/AppView');
+var AppView = require('./Components/Views/AppView');
 var AppRouter = require('./appRouter');
 
 $.fn.extend({
