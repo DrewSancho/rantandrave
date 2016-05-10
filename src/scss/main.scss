@@ -1,0 +1,9 @@
+@import "components/normalize";
+@import "components/animate";
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    font-family: 'Bangers', cursive;
+}
+
+@import "components/header";

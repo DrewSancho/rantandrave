@@ -1,0 +1,24 @@
+@import "variables";
+
+.header-slot {
+    height: 250px;
+    width: 100%;
+    background-color: $coagulatedBlood;
+}
+
+.logo {
+    color: $medRed;
+    font-size: 64px;
+    padding-left: 25px;
+}
+
+.home {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    float: right;
+}
+
+.logo, .home {
+    line-height: 250px;
+}
