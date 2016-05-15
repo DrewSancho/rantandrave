@@ -13369,6 +13369,10 @@ var AppView = Backbone.View.extend({
 
     show: function (view) {
         if (this.child) {
+<<<<<<< HEAD
+=======
+            console.log('hey');
+>>>>>>> 2a08a32cd838d3ee649267c4fe293c5876103373
             this.child.remove();
         }
         view.render();
@@ -13512,7 +13516,11 @@ var FormView = Backbone.View.extend({
 });
 
 module.exports = FormView;
+<<<<<<< HEAD
 },{"../Collection/MainCollection":4,"./formView.html":14,"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
+=======
+},{"./formView.html":14,"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
+>>>>>>> 2a08a32cd838d3ee649267c4fe293c5876103373
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = require('jquery');
@@ -13590,6 +13598,7 @@ module.exports = HomeView;
 module.exports = "<div class=\"header-slot\"></div>\n<div class=\"content-slot\"></div>";
 
 },{}],14:[function(require,module,exports){
+<<<<<<< HEAD
 module.exports = "<div class=\"category-select\">\n    <div class=\"dropdown\">\n    <button id=\"drop-button\">Category</button>\n    <ul class=\"dropdown-content\">\n        <li data-category=\"family\">Family</li>\n        <li data-category=\"work\">Work</li>\n        <li data-category=\"school\">School</li>\n        <li data-category=\"social\">Social</li>\n        <li data-category=\"food\">Food</li>\n        <li data-category=\"misc\">Misc</li>\n    </ul>\n</div>\n</div>\n<div class=\"title\">\nTitle: <input class=\"rant-title\" placeholder=\"Rant Title\">\n</div>\n<div class=\"text-area\">\n    <textarea class=\"rant-area\" rows=\"15\" cols=\"80\" \n    placeholder=\" \n    Start ranting...\n\n\n    But, be advised, Respect\n    other people's beliefs, cultures,\n    and personal identities. Profanities\n    will be edited out. This is\n    a forum to air grievences not\n    to promote hate fueled vulgarity.\n    \"></textarea>\n</div>\n<div class=\"buttons\">\n    <button class=\"cancel\">Cancel</button>\n    <button class=\"captcha\">\n    <input class=\"checkbox\" type=\"checkbox\"><span class=\"text\"> I am not a Robot </span></button>\n    <button class=\"submit\">Submit</button>\n</div>";
 
 },{}],15:[function(require,module,exports){
@@ -13598,6 +13607,16 @@ module.exports = "  <% if (window.location.hash !== '') { %>\n    <div>\n       
 },{}],16:[function(require,module,exports){
 module.exports = "<div class=\"intro\">\n    Do you find that you are \n    ranting and raving at yourself,\n    About something that happened\n    during your day? Don't beat\n    youself up. Put it in\n    writing anonymously and share\n    it with your area.\n</div>\n<div class=\"categories\">\n<h1 class=\"heading\">Categories</h1>\n<hr>\n    <button class=\"family\">Family</button>\n    <button class=\"work\">Work</button>\n    <button class=\"school\">School</button>\n    <button class=\"social\">Social</button>\n    <button class=\"food\">Food</button>\n    <button class=\"misc\">Misc</button>\n</div>\n<div class=\"new-rant\">\n    <h2 class=\"subHeading\">Share an anonymous rant now!!!</h2>\n    <button class=\"create\">Start a Rant</button>\n</div>";
 
+=======
+module.exports = "<div class=\"category-select\">\n    <input type=\"dropdown\">\n</div>\n<div class=\"title\">\nTitle:<input>\n</div>\n<div class=\"text-area\">\n    <textarea>\n    Start raving...\n    But, be advised, Respect\n    other people's beliefs, cultures,\n    and personal identities. Profanities\n    will be edited out. This is\n    a forum to air grievences not\n    to promote hate fueled vulgarity.\n    </textarea>\n</div>\n<div class=\"buttons\">\n    <button class=\"cancel\">Cancel</button>\n    <button class=\"captcha\">I am not a robot</button>\n    <button class=\"submit\">Submit</button>\n</div>";
+
+},{}],15:[function(require,module,exports){
+module.exports = "  <% if (window.location.hash !== '') { %>\n    <div class=\"home\">\n        <button style=\"\">\n        <img src=\"../../../img/home.png\"/>\n        </button>\n    </div>\n    <% } %>\n    <div class=\"logo\">rant and rave</div>";
+
+},{}],16:[function(require,module,exports){
+module.exports = "<div class=\"intro\">\n    Do you find yourself ranting\n    and raving at yourself,\n    About something that happened\n    during your day? Don't beat\n    youself up. Put it in\n    writing anonymously and share\n    it with your area\n</div>\n<div class=\"categories\">\nCategories\n    <button class=\"family\">Family</button>\n    <button class=\"work\">Work</button>\n    <button class=\"school\">School</button>\n    <button class=\"social\">Social</button>\n    <button class=\"food\">Food</button>\n    <button class=\"misc\">Misc</button>\n</div>\n<div class=\"new-rant\">\n    Share an anonymous rant now!!!\n    <button class=\"create\">Start a Rant</button>\n</div>";
+
+>>>>>>> 2a08a32cd838d3ee649267c4fe293c5876103373
 },{}],17:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = require('jquery');

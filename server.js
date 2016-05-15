@@ -26,11 +26,6 @@ app.post('/api/posts', function (req, res) {
         id: ++postID,
         likes: req.body.likes,
         zip: function () {
-            navigator.geolocation.getCurrentPosition(function success (position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            var geo = lat + ',' + lon;
-            return geo;
         }
     };
     data.push(post);
