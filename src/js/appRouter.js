@@ -12,19 +12,21 @@ var FormView = require('./Components/Views/FormView');
 var AppRouter = Backbone.Router.extend({
     routes: {
         '': 'index',
-        'index': 'index',
         'category': 'category',
         'detail/:id': 'detail',
         'rant': 'rant'
     },
 
     index: function () {
-        console.log('this');
         dispatcher.trigger('app:show', new HomeView());
     },
 
     category: function () {
-        dispatcher.trigger('app:show', new CategoryView());
+        MainCollection.fetch({
+            success: function () {
+                dispatcher.trigger('app:show', new CategoryView());
+            }
+        });
     },
 
     detail: function (id) {

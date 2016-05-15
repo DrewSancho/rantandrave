@@ -1,22 +1,36 @@
 <div class="category-select">
-    <input type="dropdown">
+    <div class="dropdown">
+    <button id="drop-button">Category</button>
+    <ul class="dropdown-content">
+        <li data-category="family">Family</li>
+        <li data-category="work">Work</li>
+        <li data-category="school">School</li>
+        <li data-category="social">Social</li>
+        <li data-category="food">Food</li>
+        <li data-category="misc">Misc</li>
+    </ul>
+</div>
 </div>
 <div class="title">
-Title:<input>
+Title: <input class="rant-title" placeholder="Rant Title">
 </div>
 <div class="text-area">
-    <textarea>
-    Start raving...
+    <textarea class="rant-area" rows="15" cols="80" 
+    placeholder=" 
+    Start ranting...
+
+
     But, be advised, Respect
     other people's beliefs, cultures,
     and personal identities. Profanities
     will be edited out. This is
     a forum to air grievences not
     to promote hate fueled vulgarity.
-    </textarea>
+    "></textarea>
 </div>
 <div class="buttons">
     <button class="cancel">Cancel</button>
-    <button class="captcha">I am not a robot</button>
+    <button class="captcha">
+    <input class="checkbox" type="checkbox"><span class="text"> I am not a Robot </span></button>
     <button class="submit">Submit</button>
 </div>

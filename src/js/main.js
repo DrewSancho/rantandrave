@@ -1,15 +1,15 @@
 var Backbone = require('backbone');
 var $ = require('jquery');
 
-var AppView = require('./components/Views/AppView');
+var AppView = require('./Components/Views/AppView');
 var AppRouter = require('./appRouter');
 
 $.fn.extend({
-    animateCss: function (animationName) {
+    animateCss: function (animationName, callback) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         $(this).addClass('animated ' + animationName).one(animationEnd, function () {
             $(this).removeClass('animated ' + animationName);
-        });
+        }, callback);
     }
 });
 

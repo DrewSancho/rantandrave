@@ -9,8 +9,4 @@ function GeoLocation (cb) {
     }
 }
 
-// getZipCode(function (zip) {
-//   postModel.set('zip', zip)
-// });
-
 module.exports = GeoLocation;

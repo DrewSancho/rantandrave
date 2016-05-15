@@ -13351,6 +13351,47 @@ var dispatcher = _.extend({}, Backbone.Events);
 module.exports = dispatcher;
 },{"backbone":1,"underscore":3}],7:[function(require,module,exports){
 var Backbone = require('backbone');
+var _ = require('underscore');
+var $ = require('jquery');
+
+var dispatcher = require('../Utility/dispatcher');
+var HeaderView = require('./HeaderView');
+
+var AppView = Backbone.View.extend({
+    className: 'appView',
+
+    template: _.template(require('./appView.html')),
+
+    initialize: function () {
+        this.headerView = new HeaderView();
+        this.listenTo(dispatcher, 'app:show', this.show);
+    },
+
+    show: function (view) {
+        if (this.child) {
+            this.child.remove();
+        }
+        view.render();
+        this.$('.content-slot').append(view.$el);
+        this.headerView.render();
+        this.child = view;
+    },
+
+    render: function () {
+        this.$el.html(this.template());
+        this.$('.header-slot').append(this.headerView.$el);
+        this.headerView.render();
+    },
+
+    remove: function () {
+        this.headerView.remove();
+        Backbone.prototype.remove.call(this);
+    }
+});
+
+module.exports = AppView;
+},{"../Utility/dispatcher":6,"./HeaderView":11,"./appView.html":13,"backbone":1,"jquery":2,"underscore":3}],8:[function(require,module,exports){
+var Backbone = require('backbone');
 
 var CategoryView = Backbone.View.extend({
     className: 'blank',
@@ -13371,7 +13412,7 @@ var CategoryView = Backbone.View.extend({
 });
 
 module.exports = CategoryView;
-},{"backbone":1}],8:[function(require,module,exports){
+},{"backbone":1}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 
 var DetailView = Backbone.View.extend({
@@ -13393,10 +13434,12 @@ var DetailView = Backbone.View.extend({
 });
 
 module.exports = DetailView;
-},{"backbone":1}],9:[function(require,module,exports){
+},{"backbone":1}],10:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = require('jquery');
+
+var mainCollection = require('../Collection/MainCollection');
 
 var FormView = Backbone.View.extend({
     className: 'create-form',
@@ -13404,7 +13447,6 @@ var FormView = Backbone.View.extend({
     template: _.template(require('./formView.html')),
 
     initialize: function () {
-
     },
 
     render: function () {
@@ -13412,33 +13454,102 @@ var FormView = Backbone.View.extend({
     },
 
     events: {
+        'click #drop-button': 'appear',
+        'click .category-select li': 'onCategoryClick',
         'click .cancel': 'cancel',
-        'click .captcha': 'captcha',
         'click .submit': 'submit'
+    },
+
+    appear: function () {
+        var myClass = $('.dropdown-content');
+        var button = $('#drop-button');
+        function display () {
+            myClass.css('display', 'none');
+            $(this).removeClass('animated ' + 'fadeOut');
+        }
+        if (button.hasClass('.active')) {
+            myClass.animateCss('fadeOut', display);
+            button.removeClass('.active');
+        } else if (!button.hasClass('.active')) {
+            button.addClass('.active');
+            myClass.animateCss('fadeIn');
+            myClass.css('display', 'block');
+        }
+    },
+
+    onCategoryClick: function (e) {
+        var myClass = $('.dropdown-content');
+        var button = $('#drop-button');
+        this.category = e.target.dataset.category;
+        button.text(this.category);
+        function display () {
+            myClass.css('display', 'none');
+            $(this).removeClass('animated ' + 'fadeOut');
+        }
+        myClass.animateCss('fadeOut', display);
+        button.removeClass('.active');
+    },
+
+    cancel: function () {
+        window.history.back();
+    },
+
+    submit: function () {
+        if ($('.checkbox').prop('checked')) {
+            mainCollection.create({
+                rant: $('textarea').val(),
+                category: this.category,
+                title: $('.rant-title').val()
+            }, {
+                success: function () {
+                    window.location.hash = 'index';
+                }
+            });
+        } else if (!$('.checkbox').prop('checked')) {
+            alert('you need to check the box');
+        }
     }
 });
 
 module.exports = FormView;
-},{"./formView.html":11,"backbone":1,"jquery":2,"underscore":3}],10:[function(require,module,exports){
+},{"../Collection/MainCollection":4,"./formView.html":14,"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
+var Backbone = require('backbone');
+var _ = require('underscore');
+var $ = require('jquery');
+
+var HeaderView = Backbone.View.extend({
+    className: 'header',
+
+    template: _.template(require('./headerView.html')),
+
+    render: function () {
+        this.$el.html(this.template());
+    },
+
+    events: {
+        'click .home': 'goHome'
+    },
+
+    goHome: function () {
+        window.location.hash = '';
+    }
+});
+
+module.exports = HeaderView;
+},{"./headerView.html":15,"backbone":1,"jquery":2,"underscore":3}],12:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = require('jquery');
 
 var HomeView = Backbone.View.extend({
-    className: 'home',
+    className: 'default-view',
 
     template: _.template(require('./homeView.html')),
 
     initialize: function () {
-        navigator.geolocation.getCurrentPosition(function success (position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            console.log(lat + ',' + lon);
-        });
     },
 
     render: function () {
-        console.log('hey there lonely girl');
         this.$el.html(this.template());
     },
 
@@ -13470,18 +13581,24 @@ var HomeView = Backbone.View.extend({
         console.log('misc');
     },
     create: function () {
-        console.log('create');
+        window.location.hash = 'rant';
     }
 });
 
 module.exports = HomeView;
-},{"./homeView.html":12,"backbone":1,"jquery":2,"underscore":3}],11:[function(require,module,exports){
-module.exports = "<div class=\"category-select\">\n    <input type=\"dropdown\">\n</div>\n<div class=\"title\">\nTitle:<input>\n</div>\n<div class=\"text-area\">\n    <textarea>\n    Start raving...\n    But, be advised, Respect\n    other people's beliefs, cultures,\n    and personal identities. Profanities\n    will be edited out. This is\n    a forum to air grievences not\n    to promote hate fueled vulgarity.\n    </textarea>\n</div>\n<div class=\"buttons\">\n    <button class=\"cancel\">Cancel</button>\n    <button class=\"captcha\">I am not a robot</button>\n    <button class=\"submit\">Submit</button>\n</div>";
+},{"./homeView.html":16,"backbone":1,"jquery":2,"underscore":3}],13:[function(require,module,exports){
+module.exports = "<div class=\"header-slot\"></div>\n<div class=\"content-slot\"></div>";
 
-},{}],12:[function(require,module,exports){
-module.exports = "<div class=\"intro\">\n    Do you find yourself ranting\n    and raving at yourself,\n    About something that happened\n    during your day? Don't beat\n    youself up. Put it in\n    writing anonymously and share\n    it with your area\n</div>\n<div class=\"categories\">\nCategories\n    <button class=\"family\">Family</button>\n    <button class=\"work\">Work</button>\n    <button class=\"school\">School</button>\n    <button class=\"social\">Social</button>\n    <button class=\"food\">Food</button>\n    <button class=\"misc\">Misc</button>\n</div>\n<div class=\"new-rant\">\n    Share an anonymous rant now!!!\n    <button class=\"create\">Start a Rant</button>\n</div>";
+},{}],14:[function(require,module,exports){
+module.exports = "<div class=\"category-select\">\n    <div class=\"dropdown\">\n    <button id=\"drop-button\">Category</button>\n    <ul class=\"dropdown-content\">\n        <li data-category=\"family\">Family</li>\n        <li data-category=\"work\">Work</li>\n        <li data-category=\"school\">School</li>\n        <li data-category=\"social\">Social</li>\n        <li data-category=\"food\">Food</li>\n        <li data-category=\"misc\">Misc</li>\n    </ul>\n</div>\n</div>\n<div class=\"title\">\nTitle: <input class=\"rant-title\" placeholder=\"Rant Title\">\n</div>\n<div class=\"text-area\">\n    <textarea class=\"rant-area\" rows=\"15\" cols=\"80\" \n    placeholder=\" \n    Start ranting...\n\n\n    But, be advised, Respect\n    other people's beliefs, cultures,\n    and personal identities. Profanities\n    will be edited out. This is\n    a forum to air grievences not\n    to promote hate fueled vulgarity.\n    \"></textarea>\n</div>\n<div class=\"buttons\">\n    <button class=\"cancel\">Cancel</button>\n    <button class=\"captcha\">\n    <input class=\"checkbox\" type=\"checkbox\"><span class=\"text\"> I am not a Robot </span></button>\n    <button class=\"submit\">Submit</button>\n</div>";
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
+module.exports = "  <% if (window.location.hash !== '') { %>\n    <div>\n        <button class=\"home\"></button>\n    </div>\n    <% } %>\n    <div class=\"logo\">rant and rave</div>";
+
+},{}],16:[function(require,module,exports){
+module.exports = "<div class=\"intro\">\n    Do you find that you are \n    ranting and raving at yourself,\n    About something that happened\n    during your day? Don't beat\n    youself up. Put it in\n    writing anonymously and share\n    it with your area.\n</div>\n<div class=\"categories\">\n<h1 class=\"heading\">Categories</h1>\n<hr>\n    <button class=\"family\">Family</button>\n    <button class=\"work\">Work</button>\n    <button class=\"school\">School</button>\n    <button class=\"social\">Social</button>\n    <button class=\"food\">Food</button>\n    <button class=\"misc\">Misc</button>\n</div>\n<div class=\"new-rant\">\n    <h2 class=\"subHeading\">Share an anonymous rant now!!!</h2>\n    <button class=\"create\">Start a Rant</button>\n</div>";
+
+},{}],17:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = require('jquery');
 var dispatcher = require('./Components/Utility/dispatcher');
@@ -13496,19 +13613,21 @@ var FormView = require('./Components/Views/FormView');
 var AppRouter = Backbone.Router.extend({
     routes: {
         '': 'index',
-        'index': 'index',
         'category': 'category',
         'detail/:id': 'detail',
         'rant': 'rant'
     },
 
     index: function () {
-        console.log('this');
         dispatcher.trigger('app:show', new HomeView());
     },
 
     category: function () {
-        dispatcher.trigger('app:show', new CategoryView());
+        MainCollection.fetch({
+            success: function () {
+                dispatcher.trigger('app:show', new CategoryView());
+            }
+        });
     },
 
     detail: function (id) {
@@ -13529,93 +13648,19 @@ var AppRouter = Backbone.Router.extend({
 });
 
 module.exports = AppRouter;
-},{"./Components/Collection/MainCollection":4,"./Components/Model/PostModel":5,"./Components/Utility/dispatcher":6,"./Components/Views/CategoryView":7,"./Components/Views/DetailView":8,"./Components/Views/FormView":9,"./Components/Views/HomeView":10,"backbone":1,"jquery":2}],14:[function(require,module,exports){
-arguments[4][6][0].apply(exports,arguments)
-},{"backbone":1,"dup":6,"underscore":3}],15:[function(require,module,exports){
-var Backbone = require('backbone');
-var _ = require('underscore');
-var $ = require('jquery');
-
-var dispatcher = require('../Utility/dispatcher');
-var HeaderView = require('./HeaderView');
-
-var AppView = Backbone.View.extend({
-    className: 'appView',
-
-    template: _.template(require('./appView.html')),
-
-    initialize: function () {
-        this.headerView = new HeaderView();
-        this.listenTo(dispatcher, 'app:show', this.show);
-    },
-
-    show: function (view) {
-        if (this.child) {
-            console.log('hey');
-            this.child.remove();
-        }
-        view.render();
-        this.$('.content-slot').append(view.$el);
-        this.headerView.render();
-        this.child = view;
-    },
-
-    render: function () {
-        this.$el.html(this.template());
-        this.$('.header-slot').append(this.headerView.$el);
-        this.headerView.render();
-    },
-
-    remove: function () {
-        this.headerView.remove();
-        Backbone.prototype.remove.call(this);
-    }
-});
-
-module.exports = AppView;
-},{"../Utility/dispatcher":14,"./HeaderView":16,"./appView.html":17,"backbone":1,"jquery":2,"underscore":3}],16:[function(require,module,exports){
-var Backbone = require('backbone');
-var _ = require('underscore');
-var $ = require('jquery');
-
-var HeaderView = Backbone.View.extend({
-    className: 'header',
-
-    template: _.template(require('./headerView.html')),
-
-    render: function () {
-        this.$el.html(this.template());
-    },
-
-    events: {
-        'click .home': 'goHome'
-    },
-
-    goHome: function () {
-        window.location.hash = '';
-    }
-});
-
-module.exports = HeaderView;
-},{"./headerView.html":18,"backbone":1,"jquery":2,"underscore":3}],17:[function(require,module,exports){
-module.exports = "<div class=\"header-slot\"></div>\n<div class=\"content-slot\"></div>";
-
-},{}],18:[function(require,module,exports){
-module.exports = "  <% if (window.location.hash !== '') { %>\n    <div class=\"home\">\n        <button style=\"\">\n        <img src=\"../../../img/home.png\"/>\n        </button>\n    </div>\n    <% } %>\n    <div class=\"logo\">rant and rave</div>";
-
-},{}],19:[function(require,module,exports){
+},{"./Components/Collection/MainCollection":4,"./Components/Model/PostModel":5,"./Components/Utility/dispatcher":6,"./Components/Views/CategoryView":8,"./Components/Views/DetailView":9,"./Components/Views/FormView":10,"./Components/Views/HomeView":12,"backbone":1,"jquery":2}],18:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = require('jquery');
 
-var AppView = require('./components/Views/AppView');
+var AppView = require('./Components/Views/AppView');
 var AppRouter = require('./appRouter');
 
 $.fn.extend({
-    animateCss: function (animationName) {
+    animateCss: function (animationName, callback) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         $(this).addClass('animated ' + animationName).one(animationEnd, function () {
             $(this).removeClass('animated ' + animationName);
-        });
+        }, callback);
     }
 });
 
@@ -13628,4 +13673,4 @@ var router = new AppRouter();
 document.body.appendChild(appView.el);
 
 Backbone.history.start();
-},{"./appRouter":13,"./components/Views/AppView":15,"backbone":1,"jquery":2}]},{},[19]);
+},{"./Components/Views/AppView":7,"./appRouter":17,"backbone":1,"jquery":2}]},{},[18]);

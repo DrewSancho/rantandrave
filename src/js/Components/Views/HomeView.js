@@ -3,20 +3,14 @@ var _ = require('underscore');
 var $ = require('jquery');
 
 var HomeView = Backbone.View.extend({
-    className: 'home',
+    className: 'default-view',
 
     template: _.template(require('./homeView.html')),
 
     initialize: function () {
-        navigator.geolocation.getCurrentPosition(function success (position) {
-            var lat = position.coords.latitude;
-            var lon = position.coords.longitude;
-            console.log(lat + ',' + lon);
-        });
     },
 
     render: function () {
-        console.log('hey there lonely girl');
         this.$el.html(this.template());
     },
 
@@ -48,7 +42,7 @@ var HomeView = Backbone.View.extend({
         console.log('misc');
     },
     create: function () {
-        console.log('create');
+        window.location.hash = 'rant';
     }
 });
 

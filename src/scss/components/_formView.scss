@@ -1,0 +1,69 @@
+@import "variables";
+@import "mixins";
+
+::-webkit-input-placeholder { /* Chrome */
+  color: $medRed;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: $medRed;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: $medRed;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color: $medRed;
+  opacity: 1;
+}
+
+.create-form {
+  background-color: $darkRed;
+  button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    height: 50px;
+    width: 160px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: $medRed;
+    border: none;
+    color: $coagulatedBlood;
+  }
+}
+
+.dropdown #drop-button.active {
+  background-color: $coagulatedBlood;
+  color: $medRed;
+}
+
+.dropdown-content {
+  display: none;
+  background-color: $darkRed;
+  margin: 0;
+  li {
+    cursor: pointer;
+    margin: 1em;
+    z-index: 50;
+    left: 0;
+    display: inline-block;
+    list-style-type: none;
+    background-color: $coagulatedBlood;
+    color: $offWhite;
+    opacity: 1;
+    height: 70px;
+    width: 160px;
+    text-align: center;
+    line-height: 70px;
+  }
+}
+
+li:hover {
+  background-color: $brightRed;
+  color: $coagulatedBlood;
+}
+
+// button:hover {
+//   background-color: $coagulatedBlood;
+//   color: $medRed;
+// }

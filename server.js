@@ -19,15 +19,21 @@ app.get('/api/posts/:id', function (req, res) {
 
 app.post('/api/posts', function (req, res) {
     var post = {
-        date: new Date(),
+        date: req.body.date,
         category: req.body.category,
         rant: req.body.rant,
         title: req.body.title,
         id: ++postID,
         likes: req.body.likes,
-        location: function () {
+        zip: function () {
+            navigator.geolocation.getCurrentPosition(function success (position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var geo = lat + ',' + lon;
+            return geo;
         }
     };
+    data.push(post);
     res.json(post);
 });
 

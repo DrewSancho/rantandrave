@@ -17,7 +17,6 @@ var AppView = Backbone.View.extend({
 
     show: function (view) {
         if (this.child) {
-            console.log('hey');
             this.child.remove();
         }
         view.render();

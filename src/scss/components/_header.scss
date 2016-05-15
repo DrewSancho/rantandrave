@@ -1,9 +1,10 @@
 @import "variables";
 
 .header-slot {
-    height: 250px;
+    height: 225px;
     width: 100%;
     background-color: $coagulatedBlood;
+    position: relative;
 }
 
 .logo {
@@ -13,12 +14,15 @@
 }
 
 .home {
+    position: absolute;
+    top: 75px;
+    left: 85%;
     border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    float: right;
+    height: 75px;
+    width: 75px;
+    background-image: url("./img/home.png")
 }
 
 .logo, .home {
-    line-height: 250px;
+    line-height: 225px;
 }

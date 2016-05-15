@@ -2583,9 +2583,10 @@ textarea {
   font-family: 'Bangers', cursive; }
 
 .header-slot {
-  height: 250px;
+  height: 225px;
   width: 100%;
-  background-color: #383030; }
+  background-color: #383030;
+  position: relative; }
 
 .logo {
   color: #c52424;
@@ -2593,12 +2594,120 @@ textarea {
   padding-left: 25px; }
 
 .home {
+  position: absolute;
+  top: 75px;
+  left: 85%;
   border-radius: 50%;
-  height: 200px;
-  width: 200px;
-  float: right; }
+  height: 75px;
+  width: 75px;
+  background-image: url("./img/home.png"); }
 
 .logo, .home {
-  line-height: 250px; }
+  line-height: 225px; }
+
+.default-view {
+  background-color: #744444; }
+
+hr {
+  color: #744444; }
+
+.intro {
+  margin: 0 auto;
+  font-size: 24px;
+  padding: 1.75em;
+  line-height: 36px;
+  width: 66.66667%; }
+
+.heading {
+  text-align: center;
+  font-size: 36px;
+  padding-left: 25px; }
+
+.categories {
+  margin: 0 auto; }
+  .categories button {
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 40px;
+    width: 25%; }
+  .categories button:hover {
+    background-color: #383030;
+    color: #faebd7; }
+
+.new-rant {
+  width: 66.66667%;
+  margin: 0 auto;
+  padding-bottom: 30px; }
+
+.subHeading {
+  text-align: center; }
+
+.create {
+  font-size: 36px;
+  width: 100%;
+  text-align: center; }
+
+.create:hover {
+  background-color: #383030;
+  color: #faebd7; }
+
+::-webkit-input-placeholder {
+  /* Chrome */
+  color: #c52424; }
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #c52424; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #c52424;
+  opacity: 1; }
+
+:-moz-placeholder {
+  /* Firefox 4 - 18 */
+  color: #c52424;
+  opacity: 1; }
+
+.create-form {
+  background-color: #9c3a3a; }
+  .create-form button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    height: 50px;
+    width: 160px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #c52424;
+    border: none;
+    color: #383030; }
+
+.dropdown #drop-button.active {
+  background-color: #383030;
+  color: #c52424; }
+
+.dropdown-content {
+  display: none;
+  background-color: #9c3a3a;
+  margin: 0; }
+  .dropdown-content li {
+    cursor: pointer;
+    margin: 1em;
+    z-index: 50;
+    left: 0;
+    display: inline-block;
+    list-style-type: none;
+    background-color: #383030;
+    color: #faebd7;
+    opacity: 1;
+    height: 70px;
+    width: 160px;
+    text-align: center;
+    line-height: 70px; }
+
+li:hover {
+  background-color: #ff0000;
+  color: #383030; }
 
 /*# sourceMappingURL=main.css.map */
