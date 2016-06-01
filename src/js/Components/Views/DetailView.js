@@ -5,7 +5,7 @@ var DetailView = Backbone.View.extend({
 
     template: '...',
 
-    initialize: function (params) {
+    initialize: function () {
 
     },
 

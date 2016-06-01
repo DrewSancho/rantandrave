@@ -1,9 +1,10 @@
 var Backbone = require('backbone');
+var _ = require('underscore');
 
 var CategoryView = Backbone.View.extend({
-    className: 'blank',
+    className: 'category-view',
 
-    template: '...',
+    template: _.template(require('./categoryView.html')),
 
     initialize: function () {
 

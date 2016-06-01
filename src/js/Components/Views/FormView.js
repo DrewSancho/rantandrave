@@ -30,11 +30,11 @@ var FormView = Backbone.View.extend({
             myClass.css('display', 'none');
             $(this).removeClass('animated ' + 'fadeOut');
         }
-        if (button.hasClass('.active')) {
+        if (button.hasClass('active')) {
             myClass.animateCss('fadeOut', display);
-            button.removeClass('.active');
-        } else if (!button.hasClass('.active')) {
-            button.addClass('.active');
+            button.removeClass('active');
+        } else if (!button.hasClass('active')) {
+            button.addClass('active');
             myClass.animateCss('fadeIn');
             myClass.css('display', 'block');
         }
@@ -50,7 +50,7 @@ var FormView = Backbone.View.extend({
             $(this).removeClass('animated ' + 'fadeOut');
         }
         myClass.animateCss('fadeOut', display);
-        button.removeClass('.active');
+        button.removeClass('active');
     },
 
     cancel: function () {
@@ -62,10 +62,9 @@ var FormView = Backbone.View.extend({
             mainCollection.create({
                 rant: $('textarea').val(),
                 category: this.category,
-                title: $('.rant-title').val()
-            }, {
+                title: $('.rant-title').val(),
                 success: function () {
-                    window.location.hash = 'index';
+                    console.log('joseph you are out of your league');
                 }
             });
         } else if (!$('.checkbox').prop('checked')) {

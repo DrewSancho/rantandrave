@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var postID = 0;
-var data = [];
+var data = [{
+}];
 
 app.use(bodyParser());
 

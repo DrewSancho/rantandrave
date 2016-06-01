@@ -17,6 +17,7 @@ hr {
     @include column (2, 3);
 }
 .heading {
+    margin-top: 0;
     text-align: center;
     font-size: 36px;
     padding-left: 25px;
@@ -27,6 +28,7 @@ hr {
         font-size: 24px;
         text-align: center;
         margin: 20px 40px;
+        height: 50px;
         @include column(1, 4)
     }
     button:hover {
@@ -51,7 +53,7 @@ hr {
     text-align: center;
 }
 
-.create:hover {
+.create:hover, .category-topic.active {
     background-color: $coagulatedBlood;
     color: $offWhite;
 }
